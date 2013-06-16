@@ -67,6 +67,7 @@ class Dealer:
         if self.on_deck:
             self.players = self.players + self.on_deck
         self.on_deck = []
+        self.folded = []
         self.active = [Hand(x) for x in list(self.players)]
         for hand in self.active:
             hand.act = False
@@ -342,7 +343,7 @@ class Dealer:
                     table.append(h.__repr__())
             for h in self.folded:
                 if h.player.name == player.name:
-                    table.append(hand.player.name + ' ' + 'Folded')
+                    table.append(h.player.name + ' ' + 'Folded')
         return table
 
     def get_game_info_for_display(self):
@@ -453,7 +454,7 @@ def announce(phenny, input):
             hand_result = ' '.join(hand.hand_result[2] + hand.hand_result[3])
         else:
             hand_result = ' '.join(hand.hand_result[2])
-        phenny.say("%s  Stack: %d  %s" % (hand.player.name, hand.player.chips, hand_result))
+        phenny.say("%s holding %s  Stack: %d  %s" % (hand.player.name, ' '.join(hand.cards), hand.player.chips, hand_result))
 
 def th_challenge(phenny, input):
     if dealer.game_on == 1:
