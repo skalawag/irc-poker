@@ -1,2 +1,4 @@
 * Description
 This is a Phenny module for playing poker (just Texas Holdem for now) over IRC.
+
+This has not been tested very throughly. There will be breakage somewhere....
