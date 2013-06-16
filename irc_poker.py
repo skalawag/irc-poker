@@ -39,7 +39,6 @@ class Dealer:
         self.board = []
         self.winners = []
         self.won_pot = 0
-        self.bettor = None
 
     def clean_up(self):
         self.players = []
@@ -57,7 +56,6 @@ class Dealer:
         self.board = []
         self.winners = []
         self.won_pot = 0
-        self.bettor = None
 
     def is_game_over(self):
         num_of_players = len([p for p in self.players if p.chips > 0])
@@ -148,9 +146,6 @@ class Dealer:
             self.__null_acts()
             return None
 
-    def next_up(self):
-        return self.active[0]
-
     def add_player(self, name):
         p = Player(name, 1000)
         self.players.append(p)
@@ -180,11 +175,8 @@ class Dealer:
 
     ## Pot
     def add_to_pot(self, amt):
-        self.pots[self.get_active_pot_key()]['amt'] += amt
-
-    def get_active_pot_key(self):
         if self.pots.keys():
-            return max(self.pots.keys())
+            self.pots[max(self.pots.keys())]['amt'] += amt
 
     def clear_line_bets(self):
         while True:
@@ -209,10 +201,6 @@ class Dealer:
                         self.pots[pot_key]['contenders'].append(hand)
 
     def new_pot(self,pot_key):
-        # initially the amt of the side-pot is the amount the
-        # player bet. but at the end of the betting round, we have
-        # to add what is in the pot plus any calls. any additional
-        # and future betting goes into another side-pot.
         self.pots.setdefault(pot_key, {'contenders': [], 'amt': 0, 'winners':[]})
 
     ## Player actions
